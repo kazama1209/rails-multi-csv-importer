@@ -1,0 +1,44 @@
+// フラッシュメッセージ
+- flash.each do |type, message|
+  div class="alert alert-#{type} alert-dismissible rounded-0 fade show" role="alert" 
+    button.btn-close aria-label="Close" data-bs-dismiss="alert" type="button" 
+    h5.m-0
+      = message
+
+.container.p-3
+  .row.mb-2
+    .col-md-12
+      .d-flex.align-items-center.mb-2
+        h1.m-0.text-dark CSVインポート
+        .ms-auto
+          button.btn.btn-primary data-bs-target="#fileUploadModal" data-bs-toggle="modal" type="button"
+            | ファイルアップロード
+  
+  .row
+    .col-lg-12
+      .card.card-primary.card-outline
+        .card-body
+          #outputs
+            | ここにアップロードした結果が表示されます
+
+// モーダル画面
+#fileUploadModal.modal.fade aria-hidden="true" aria-labelledby="fileUploadModalLabel" tabindex="-1" 
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h5#fileUploadModalLabel.modal-title
+          | ファイルアップロード
+        button.btn-close id="modalClose" aria-label="Close" data-bs-dismiss="modal" type="button"
+
+      = form_with url: import_csv_index_path, local: false do |f|
+        .modal-body
+          table.table.table-borderless
+            tr
+              - options = [["作者", "Author"], ["書籍", "Book"]]
+              td = f.select :model_name, options, { value: nil, selected: false, prompt: "対象のデータを選択してください" }, class: "form-select"
+            tr
+              td = f.file_field :file, accept: ".csv", class: "form-control"
+
+        .modal-footer
+          button.btn.btn-secondary data-bs-dismiss="modal" type="button"  閉じる
+          = f.submit "送信", class: "btn btn-success"

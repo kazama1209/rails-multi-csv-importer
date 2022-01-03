@@ -1,0 +1,26 @@
+table.table
+  thead
+    tr
+      th.border-top-0 scope="col"
+      
+      - results[0].each do |k, _|
+        th.border-top-0 scope="col"
+          = t("activerecord.attributes.#{model_name.underscore}.#{k}")
+    
+    // データの件数をカウントするために each.with_index で回す
+    - results.each.with_index(1) do |row_hash, index|
+      tr
+        td = index
+        
+        - row_hash.each do |k, _|
+          td = row_hash[k]
+
+// 取り込み予定のデータを JSON 形式の配列で create アクションに渡す
+= form_with url: csv_index_path, local: true do |f|
+  - results.map { |row_hash| row_hash.to_json }.each do |row_json|
+    = f.hidden_field :results, multiple: true, value: row_json
+    = f.hidden_field :model_name, value: model_name
+  
+  .mt-3.text-end
+    = link_to "リセット", csv_index_path, class: "btn btn-secondary"
+    = f.submit "登録", class: "btn btn-success ms-2"

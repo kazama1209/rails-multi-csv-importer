@@ -46,3 +46,16 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# i18n
+gem "rails-i18n"
+
+# Template engine
+gem "slim-rails"
+gem "html2slim"
+
+# CSV parser
+gem "roo"
+
+# Bulk insert
+gem "activerecord-import"

@@ -1,0 +1,9 @@
+p CSVファイルに問題があるため、インポートに失敗しました
+
+// エラーが生じた行数と具体的な内容を出力
+- @errors.each do |error|
+  - error[:messages].each do |message|
+    li = error[:row_number] ? "#{error[:row_number]}行目：#{message}" : message
+
+.mt-3.text-right
+  = link_to "リセット", csv_index_path, class: "btn btn-secondary"
