@@ -34,8 +34,7 @@
         .modal-body
           table.table.table-borderless
             tr
-              - options = [["作者", "Author"], ["書籍", "Book"]]
-              td = f.select :model_name, options, { value: nil, selected: false, prompt: "対象のデータを選択してください" }, class: "form-select"
+              td = f.select :model_name, I18n.t("activerecord.models").map { |k, v| [v, k.to_s.camelize] }, { value: nil, selected: false, prompt: "対象のデータを選択してください" }, class: "form-select"
             tr
               td = f.file_field :file, accept: ".csv", class: "form-control"
 
