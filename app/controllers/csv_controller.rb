@@ -15,7 +15,9 @@ class CsvController < ApplicationController
     end
 
     # バルクインサート
-    model_name.constantize.import(instances)
+    ActiveRecord::Base.transaction do
+      model_name.constantize.import!(instances)
+    end
 
     redirect_to csv_index_path, success: set_flash_message(model_name)
   end
